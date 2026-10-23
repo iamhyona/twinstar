@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792770000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792771000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>TWIN STAR · 트윈스타</title>
@@ -199,6 +199,8 @@ const sfx={
  item:()=>[660,880,1320].forEach((f,i)=>tone('square',f,0,.09,.05,i*.06)),
  clear:()=>[523,659,784,1047].forEach((f,i)=>tone('square',f,0,.14,.05,i*.1)),
  dive:()=>tone('triangle',700,250,.35,.03),
+ beam:()=>{tone('sawtooth',220,880,.5,.07);tone('square',440,1760,.6,.04);noise(.6,.12,4000)},
+ rescue:()=>[523,784,1047,1319].forEach((f,i)=>tone('triangle',f,0,.12,.07,i*.07)),
  over:()=>[392,330,262,196].forEach((f,i)=>tone('triangle',f,f*.97,.35,.08,i*.3))};
 /* 배경음: 경쾌한 8비트 우주 순찰 (원곡) */
 const BG={on:false,at:0,n:0};
@@ -216,6 +218,7 @@ function bgmStop(){BG.on=false}
 /* ===== 상태 ===== */
 let state='title',mode='normal',stage=1,score=0,lives=3,tGame=0,banner=null,lastWin=null;
 let P=[],E=[],PB=[],EB=[],IT_=[],FX=[],STARS=[],diveT=0,nextId=1,clearT=0,shakeT=0;
+let beam={ch:0,t:0,x:0,cd:3}; // 트윈 빔: 둘이 가까이 붙으면 충전
 let coop=null; // {host:bool, conn, peer, name, oppName, ready, oppReady}
 const isHost=()=>!coop||coop.host;
 const me=()=>coop&&!coop.host?1:0;
@@ -232,7 +235,7 @@ function buildStage(){E=[];PB=[];EB=[];IT_=[];let n=0;
  rows.forEach((cs,r)=>cs.forEach(c=>{const k=r===0?2:r<3?1:0;const grp=r===0?0:r<3?1+(c>3?1:0):3+(c>3?1:0);
   const left=grp%2===0;E.push({id:nextId++,k,hp:k===2?2:1,c,r,x:-30,y:-30,st:'wait',t:0,delay:grp*1.15+(n%8)*.11,sx:left?-20:W+20,sy:H*.42,cx:left?W*.95:W*.05,cy:-60,fl:0});n++}));
  diveT=2.5;clearT=0;banner={t:'STAGE '+stage,until:tGame+1.8}}
-function startGame(m){mode=m;stage=1;score=0;tGame=0;const L=MODES[m].life;lives=coop?L:L-1;P=coop?[newPlayer(0),newPlayer(1)]:[newPlayer(0)];FX=[];buildStage();state='play';lastWin=null;
+function startGame(m){mode=m;stage=1;score=0;tGame=0;const L=MODES[m].life;lives=coop?L:L-1;P=coop?[newPlayer(0),newPlayer(1)]:[newPlayer(0)];FX=[];beam={ch:0,t:0,x:0,cd:3};buildStage();state='play';lastWin=null;
  ['ovTitle','ovMode','ovOver','ovPause','ovRank','ovWait'].forEach(hide);$('field').classList.remove('dead');hud();unlock();bgmStart();$('bPause').disabled=!!coop}
 function addScore(n){score+=Math.round(n*MODES[mode].mul)}
 function boom(xx,yy,col,n,big){for(let i=0;i<(n||14);i++){const a=Math.random()*6.28,s=40+Math.random()*(big?220:140);FX.push({x:xx,y:yy,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:.5+Math.random()*.4,c:Math.random()<.4?'#fff':col,s:big?3:2})}}
@@ -242,7 +245,8 @@ function ev(...a){if(coop&&coop.host)EV.push(a)}
 /* ===== 진행 (혼자 하기 / 방장) ===== */
 function step(dt){tGame+=dt;const M=MODES[mode];
  // 플레이어
- P.forEach((p,i)=>{if(p.out)return;
+ P.forEach((p,i)=>{if(p.out){ // 쓰러진 친구: 다른 사람이 SOS 캡슐 위에 머물면 구출
+   const mate=P.find((q,j)=>j!==i&&q.alive);if(mate&&Math.abs(mate.x-p.x)<22){p.rs=(p.rs||0)+dt;if(p.rs>=1.2){p.out=false;p.alive=true;p.inv=2.4;p.rs=0;sfx.rescue();ev('r',i);FX.push({txt:'RESCUE!',x:p.x,y:p.y-24,l:1.4,c:'#8fe39a'});hud()}}else p.rs=Math.max(0,(p.rs||0)-dt*.6);return}
   if(!p.alive){p.re-=dt;if(p.re<=0&&!p.out){p.alive=true;p.inv=2.2;p.sh=false}return}
   if(p.tx!=null)p.x+=(p.tx-p.x)*Math.min(1,dt*18);
   p.x=Math.max(12,Math.min(W-12,p.x));p.inv=Math.max(0,p.inv-dt);p.pow=Math.max(0,p.pow-dt);
@@ -267,14 +271,19 @@ function step(dt){tGame+=dt;const M=MODES[mode];
  if(diveT<=0&&!entering&&alive.length){diveT=Math.max(.45,M.dive*Math.pow(.93,stage-1))*(coop?.8:1)*(.7+Math.random()*.6);
   const cand=E.filter(e=>e.st==='form');if(cand.length&&diving<maxDive){const e=cand[Math.floor(Math.random()*cand.length)];const tg=alive[Math.floor(Math.random()*alive.length)];
    e.st='dive';e.ph=0;e.vy=-110;e.tx=tg.x;e.re=0;e.shots=M.shots+(stage>3?1:0);e.nextY=e.y+70+Math.random()*60;sfx.dive();ev('d')}}
+ // 트윈 빔 (같이 하기): 둘이 가까이 붙어 있으면 충전 → 두 비행기 사이에서 굵은 빔
+ if(P.length===2){const a=P[0],b=P[1],both=a.alive&&b.alive;
+  if(beam.t>0){beam.t-=dt;if(both)beam.x=(a.x+b.x)/2;for(const e of E){if(!e.dead&&e.st!=='wait'&&Math.abs(e.x-beam.x)<20&&e.y<H-50){e.hp=0;killE(e)}}EB=EB.filter(o=>Math.abs(o.x-beam.x)>=20);shakeT=Math.max(shakeT,.08)}
+  else if(beam.cd>0)beam.cd-=dt;
+  else if(both&&Math.abs(a.x-b.x)<46&&!clearT){beam.ch=Math.min(1,beam.ch+dt/.8);if(beam.ch>=1){beam.t=1;beam.cd=7;beam.ch=0;beam.x=(a.x+b.x)/2;sfx.beam();ev('B');FX.push({txt:'TWIN BEAM!',x:W/2,y:H*.45,l:1.4,c:'#ffffff'})}}
+  else beam.ch=Math.max(0,beam.ch-dt*.7)}
  // 적 총알
  EB.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt});EB=EB.filter(b=>b.y<H+10&&b.x>-10&&b.x<W+10);
  // 아이템
  IT_.forEach(t=>t.y+=70*dt);IT_=IT_.filter(t=>t.y<H+10);
  // 충돌: 내 총알 → 적
  for(const b of PB){if(b.dead)continue;for(const e of E){if(e.dead||e.st==='wait')continue;if(Math.abs(b.x-e.x)<11&&Math.abs(b.y-e.y)<10){b.dead=1;e.hp--;e.fl=.12;
-   if(e.hp>0){sfx.tink();ev('t',e.x,e.y)}else{e.dead=1;const div=e.st==='dive';addScore([50,80,150][e.k]*(div?2:1));boom(e.x,e.y,EC[e.k][0],e.k===2?22:14,e.k===2);(e.k===2?sfx.big:sfx.boom)();ev('x',e.x,e.y,e.k);
-    if(Math.random()<(e.k===2?.3:.075)){const r=Math.random();IT_.push({x:e.x,y:e.y,k:r<.45?'P':r<.75?'S':'H'})}}break}}}
+   if(e.hp>0){sfx.tink();ev('t',e.x,e.y)}else killE(e);break}}}
  PB=PB.filter(b=>!b.dead);
  // 충돌: 적·총알 → 플레이어
  P.forEach((p,i)=>{if(!p.alive||p.inv>0)return;let hit=false;
@@ -286,13 +295,15 @@ function step(dt){tGame+=dt;const M=MODES[mode];
  IT_.forEach(t=>{for(let i=0;i<P.length;i++){const p=P[i];if(p.alive&&Math.abs(t.x-p.x)<16&&Math.abs(t.y-p.y)<16){t.dead=1;getItem(t.k,i);break}}});IT_=IT_.filter(t=>!t.dead);
  // 파편
  // 스테이지 클리어
- if(!E.length&&!clearT){clearT=tGame;addScore(500*stage);banner={t:'STAGE CLEAR',until:tGame+1.6};sfx.clear();ev('c');EB=[]}
+ if(!E.length&&!clearT){clearT=tGame;addScore(500*stage);const team=P.length===2&&P.every(p=>p.alive);if(team)addScore(500*stage);banner={t:team?'TEAM BONUS':'STAGE CLEAR',until:tGame+1.6};sfx.clear();ev('c',team?1:0);EB=[]}
  if(clearT&&tGame-clearT>2){stage++;buildStage();ev('s',stage)}
  // 게임 오버
  if(P.every(p=>p.out)&&state==='play')gameOver();
  hud()}
+function killE(e){if(e.dead)return;e.dead=1;const div=e.st==='dive';addScore([50,80,150][e.k]*(div?2:1));boom(e.x,e.y,EC[e.k][0],e.k===2?22:14,e.k===2);(e.k===2?sfx.big:sfx.boom)();ev('x',e.x,e.y,e.k);
+ if(Math.random()<(e.k===2?.3:.075)){const r=Math.random();IT_.push({x:e.x,y:e.y,k:r<.45?'P':r<.75?'S':'H'})}}
 function killPlayer(p,i){p.alive=false;boom(p.x,p.y,PC[i],26,true);sfx.hit();shakeT=.35;ev('h',p.x,p.y,i);if(i===me())buzz(60);
- if(lives>0){lives--;p.re=1.3}else{p.out=true}hud()}
+ if(lives>0){lives--;p.re=1.3}else{p.out=true;p.rs=0}hud()}
 function getItem(k,i){const p=P[i];sfx.item();ev('i',i,k);
  if(k==='P')p.pow=10;else if(k==='S')p.sh=true;
  else{const o=P.find(q=>q.out);if(o){o.out=false;o.alive=false;o.re=.3}else lives++}
@@ -314,7 +325,9 @@ function applySnap(d){snapA=snapB;snapB=d;snapAt=performance.now();
   else if(k==='t')sfx.tink();
   else if(k==='h'){boom(a[1],a[2],PC[a[3]],26,true);sfx.hit();shakeT=.35;if(a[3]===1)buzz(60)}
   else if(k==='i'){sfx.item();const p=d.p[a[1]];if(p)FX.push({txt:a[2]==='P'?'DOUBLE':a[2]==='S'?'SHIELD':'1UP',x:p[0],y:H-60,l:1,c:ITC[a[2]]})}
-  else if(k==='c'){sfx.clear();banner={t:'STAGE CLEAR',until:tGame+1.6}}
+  else if(k==='c'){sfx.clear();banner={t:a[1]?'TEAM BONUS':'STAGE CLEAR',until:tGame+1.6}}
+  else if(k==='B'){sfx.beam();FX.push({txt:'TWIN BEAM!',x:W/2,y:H*.45,l:1.4,c:'#ffffff'})}
+  else if(k==='r'){sfx.rescue();const p=d.p[a[1]];if(p)FX.push({txt:'RESCUE!',x:p[0],y:H-64,l:1.4,c:'#8fe39a'})}
   else if(k==='s'){banner={t:'STAGE '+a[1],until:tGame+1.8}}
   else if(k==='d')sfx.dive()});
  hud()}
@@ -324,14 +337,14 @@ function guestView(){const now=performance.now(),A=snapA||snapB,B=snapB;if(!B)re
  const eb=[];for(let i=0;i<B.b.length;i+=4)eb.push({x:B.b[i]+B.b[i+2]*age,y:B.b[i+1]+B.b[i+3]*age});
  const pb=[];for(let i=0;i<B.q.length;i+=3)pb.push({x:B.q[i],y:B.q[i+1]-430*age,o:B.q[i+2]});
  const it=[];for(let i=0;i<B.it.length;i+=3)it.push({x:B.it[i],y:B.it[i+1]+70*age,k:B.it[i+2]});
- const ps=[];for(let i=0;i<2;i++){const p=B.p[i];if(!p)continue;const q={x:p[0],y:H-40,alive:!!p[1],inv:p[2],pow:p[3],sh:!!p[4],out:!!p[5]};
-  if(i===1){q.x=myX}else if(A&&A.p[0]){q.x=A.p[0][0]+(p[0]-A.p[0][0])*Math.min(1,u)}ps.push(q)}
- return{E:es,EB:eb,PB:pb,IT:it,P:ps}}
+ const ps=[];for(let i=0;i<2;i++){const p=B.p[i];if(!p)continue;const q={x:p[0],y:H-40,alive:!!p[1],inv:p[2],pow:p[3],sh:!!p[4],out:!!p[5],rs:(p[6]||0)/10};
+  if(i===1&&!q.out){q.x=myX}else if(A&&A.p[0]){q.x=A.p[0][0]+(p[0]-A.p[0][0])*Math.min(1,u)}ps.push(q)}
+ const bm=B.bm||[0,0,0,1];return{E:es,EB:eb,PB:pb,IT:it,P:ps,BM:{x:bm[1]&&ps.length===2?(ps[0].x+ps[1].x)/2:bm[0],t:bm[1],ch:bm[2]/10,cd:bm[3]}}}
 let myX=W*.66;
 function snapshot(){const r=v=>Math.round(v);const e=[];E.forEach(o=>{if(o.st!=='wait')e.push(o.id,o.k,o.hp,r(o.x),r(o.y))});
  const b=[];EB.forEach(o=>b.push(r(o.x),r(o.y),r(o.vx),r(o.vy)));const q=[];PB.forEach(o=>q.push(r(o.x),r(o.y),o.o));const it=[];IT_.forEach(o=>it.push(r(o.x),r(o.y),o.k));
- const p=P.map(o=>[r(o.x),o.alive?1:0,o.inv>0?1:0,o.pow>0?1:0,o.sh?1:0,o.out?1:0]);
- const d={t:'s',e,b,q,it,p,sc:score,lv:lives,st:stage,ev:EV};EV=[];return d}
+ const p=P.map(o=>[r(o.x),o.alive?1:0,o.inv>0?1:0,o.pow>0?1:0,o.sh?1:0,o.out?1:0,Math.round((o.rs||0)*10)]);
+ const d={t:'s',e,b,q,it,p,sc:score,lv:lives,st:stage,bm:[r(beam.x),beam.t>0?1:0,Math.round(beam.ch*10),beam.cd>0?1:0],ev:EV};EV=[];return d}
 
 /* ===== 그리기 ===== */
 function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#06071a';x.fillRect(0,0,cv.width,cv.height);
@@ -340,12 +353,20 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#06071a';x.fillRect(0
  const y0=-OY/SC,y1=(cv.height-OY)/SC,x0=-OX/SC,x1=(cv.width-OX)/SC; // 별은 화면 전체에
  STARS.forEach(s=>{s.y+=s.z*.045*dt;if(s.y>1){s.y=0;s.x=Math.random()}x.globalAlpha=.35+s.z*.25;x.fillStyle=s.c;x.fillRect(Math.round(x0+s.x*(x1-x0)),Math.round(y0+s.y*(y1-y0)),s.z>1.8?2:1,s.z>1.8?2:1)});x.globalAlpha=1;
  x.save();
- let V;if(coop&&!coop.host&&state!=='title'){V=guestView()||{E:[],EB:[],PB:[],IT:[],P:[]}}else V={E,EB,PB,IT:IT_,P};
+ let V;if(coop&&!coop.host&&state!=='title'){V=guestView()||{E:[],EB:[],PB:[],IT:[],P:[]}}else V={E,EB,PB,IT:IT_,P,BM:{x:beam.x,t:beam.t>0?1:0,ch:beam.ch,cd:beam.cd>0?1:0}};
  const anim=Math.floor(tGame*3)%2;
  V.E.forEach(e=>{const nm=['bee','moth','boss'][e.k]+(anim?'2':'');let c=EC[e.k];if(e.k===2&&e.hp<2)c=EC[3];if(e.fl>0)c=['#ffffff','#ffffff'];drawSpr(nm,e.x,e.y,2,c[0],c[1])});
  V.PB.forEach(b=>{x.fillStyle=PC[b.o];x.fillRect(Math.round(b.x)-1,Math.round(b.y)-5,2,8);x.fillStyle='#fff';x.fillRect(Math.round(b.x)-1,Math.round(b.y)-5,2,3)});
  V.EB.forEach(b=>{x.fillStyle='#ff4d6d';x.fillRect(Math.round(b.x)-2,Math.round(b.y)-2,4,4);x.fillStyle='#fff';x.fillRect(Math.round(b.x)-1,Math.round(b.y)-1,2,2)});
  V.IT.forEach(t=>{const m=IT[t.k];x.fillStyle='rgba(255,255,255,.12)';x.fillRect(t.x-9,t.y-9,18,18);x.strokeStyle=ITC[t.k];x.lineWidth=1.5;x.strokeRect(t.x-9,t.y-9,18,18);x.fillStyle=ITC[t.k];m.forEach((row,yy)=>[...row].forEach((v,xx)=>{if(v==='1')x.fillRect(t.x-5+xx*2,t.y-5+yy*2,2,2)}))});
+ if(coop&&V.P.length===2&&V.BM){const a=V.P[0],b=V.P[1],bm=V.BM;
+  if(bm.t){const bx=bm.x,w=16+Math.sin(performance.now()/40)*3;const g=x.createLinearGradient(bx-w,0,bx+w,0);g.addColorStop(0,'rgba(63,208,255,0)');g.addColorStop(.3,PC[0]);g.addColorStop(.5,'#ffffff');g.addColorStop(.7,PC[1]);g.addColorStop(1,'rgba(255,111,174,0)');x.fillStyle=g;x.globalAlpha=.9;x.fillRect(bx-w,-OY/SC,w*2,H-50+OY/SC);x.globalAlpha=1}
+  else if(a.alive&&b.alive&&!a.out&&!b.out){if(bm.ch>0){x.strokeStyle='#ffffff';x.globalAlpha=.3+bm.ch*.6;x.lineWidth=1+bm.ch*3;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();x.globalAlpha=1;
+    x.strokeStyle='#ffd23f';x.lineWidth=2;x.beginPath();x.arc((a.x+b.x)/2,a.y-18,7,-Math.PI/2,-Math.PI/2+bm.ch*6.283);x.stroke()}
+   else if(!bm.cd){x.font='700 7px Silkscreen';x.textAlign='center';x.fillStyle='rgba(255,255,255,'+(.45+.3*Math.sin(performance.now()/200))+')';x.fillText('TWIN BEAM READY',W/2,H-8)}}}
+ V.P.forEach((p,i)=>{if(!p.out)return;const bl=Math.floor(performance.now()/300)%2; // 쓰러진 친구 SOS 캡슐
+  drawSpr('ship',p.x,p.y,2,bl?PC[i]:'#555a7a','#888ca8',null,.45);x.font='700 8px Silkscreen';x.textAlign='center';x.fillStyle=PC[i];x.fillText('SOS',p.x,p.y-16);
+  if(p.rs>0){x.strokeStyle='#8fe39a';x.lineWidth=2.5;x.beginPath();x.arc(p.x,p.y,15,-Math.PI/2,-Math.PI/2+Math.min(1,p.rs/1.2)*6.283);x.stroke()}});
  V.P.forEach((p,i)=>{if(!p.alive||p.out)return;if(p.inv&&Math.floor(performance.now()/90)%2)return;
   drawSpr('ship',p.x,p.y,2,PC[i],'#ffffff',Math.floor(performance.now()/80)%2?'#ffd23f':'#ff9a3c');
   if(p.pow){x.fillStyle=PC[i];x.globalAlpha=.25;x.fillRect(p.x-14,p.y+12,28,2);x.globalAlpha=1}
@@ -354,14 +375,14 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#06071a';x.fillRect(0
  FX.forEach(f=>{f.l-=dt;if(f.txt){f.y-=20*dt;x.globalAlpha=Math.max(0,f.l);x.font='700 9px Silkscreen';x.textAlign='center';x.fillStyle=f.c;x.fillText(f.txt,f.x,f.y);x.globalAlpha=1;return}
   f.x+=f.vx*dt;f.y+=f.vy*dt;f.vx*=.96;f.vy*=.96;x.globalAlpha=Math.max(0,f.l*1.6);x.fillStyle=f.c;x.fillRect(f.x,f.y,f.s,f.s);x.globalAlpha=1});FX=FX.filter(f=>f.l>0);
  if(banner&&tGame<banner.until){x.font='700 18px Silkscreen';x.textAlign='center';x.fillStyle='#fff';x.shadowColor='#9fb4ff';x.shadowBlur=12;x.fillText(banner.t,W/2,H*.55);x.shadowBlur=0}
- if(coop&&state==='play'){const mine=V.P[me()];if(mine&&mine.out){x.font='12px Galmuri11';x.textAlign='center';x.fillStyle='#ff8aa0';x.fillText('친구가 1UP을 먹으면 다시 살아나요',W/2,H-30)}}
+ if(coop&&state==='play'){const mine=V.P[me()];if(mine&&mine.out){x.font='12px Galmuri11';x.textAlign='center';x.fillStyle='#ff8aa0';x.fillText('친구가 SOS 위에 와서 구해 줄 때까지 기다려요',W/2,H*.62)}}
  x.restore()}
 
 /* ===== 조작 ===== */
 const keys={};addEventListener('keydown',e=>{keys[e.key]=1;if(e.key==='Escape'||e.key==='p')togglePause()});addEventListener('keyup',e=>keys[e.key]=0);
 let drag=null;
 function myShip(){return coop&&!coop.host?null:P[0]}
-function setMyX(v){v=Math.max(12,Math.min(W-12,v));if(coop&&!coop.host){myX=v}else if(P[0])P[0].x=v}
+function setMyX(v){v=Math.max(12,Math.min(W-12,v));if(coop&&!coop.host){myX=v}else if(P[0]&&!P[0].out)P[0].x=v}
 function getMyX(){return coop&&!coop.host?myX:(P[0]?P[0].x:W/2)}
 const fld=$('field');
 fld.addEventListener('pointerdown',e=>{if(state!=='play')return;drag={id:e.pointerId,fx:e.clientX,sx:getMyX(),mouse:e.pointerType==='mouse'};try{fld.setPointerCapture(e.pointerId)}catch(_){}});
@@ -402,7 +423,7 @@ $('bSound').onclick=()=>{sound=!sound;$('bSound').classList.toggle('on',sound);i
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play'&&!coop)togglePause()});
 $('bStart').onclick=()=>{unlock();if(coop)leaveCoop(true);show('ovMode')};
 $('modeX').onclick=()=>{hide('ovMode');if(coop&&coop.host)leaveCoop()};
-const TUT={"goal":"쏟아지는 우주 벌레를 모두 물리치면 다음 스테이지!<br>총은 자동으로 나가요. 친구와 함께라면 목숨을 같이 써요.","touch":[["← 밀기 →","비행기 옮기기"],["1UP","목숨 +1 · 쓰러진 친구 살리기"],["P · S","두 발 쏘기 · 방패"]],"pc":[["← → / 마우스","비행기 옮기기"],["1UP","목숨 +1 · 쓰러진 친구 살리기"],["P · S","두 발 쏘기 · 방패"]]};
+const TUT={"goal":"쏟아지는 우주 벌레를 모두 물리치면 다음 스테이지!<br>총은 자동으로 나가요. 친구와 함께라면<br>가까이 붙어서 트윈 빔! 쓰러지면 SOS로 구출!","touch":[["← 밀기 →","비행기 옮기기"],["둘이 붙기","트윈 빔 충전"],["SOS 위에 머물기","쓰러진 친구 구출"],["P · S · 1UP","두 발 · 방패 · 목숨"]],"pc":[["← → / 마우스","비행기 옮기기"],["둘이 붙기","트윈 빔 충전"],["SOS 위에 머물기","쓰러진 친구 구출"],["P · S · 1UP","두 발 · 방패 · 목숨"]]};
 document.querySelectorAll('#ovMode [data-m]').forEach(b=>b.onclick=()=>{const m=b.dataset.m;
  if(coop&&coop.host){if(!coop.conn||!coop.conn.open)return;hide('ovMode');send({t:'go',m});countdown(()=>startGame(m),m);return}
  phTut('twinstar-tut',TUT,()=>startGame(m))});
