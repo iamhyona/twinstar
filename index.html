@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792840000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793001824";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>TWIN STAR · 트윈스타</title>
@@ -145,12 +145,12 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
     </div>
     <div class="ov" id="ovRank">
       <div class="sub">RANKING</div>
-      <div class="list" id="rankList"></div>
+      <div id="rkBar"></div><div class="list" id="rankList"></div>
       <button class="x" data-close="ovRank">✕</button>
     </div>
   </div></div>
 </div>
-<script src="../games/ph.js?v=13"></script>
+<script src="../games/ph.js?v=14"></script>
 <script src="../games/relay.js?v=1"></script>
 <script>
 (()=>{
@@ -322,7 +322,7 @@ function gameOver(){state='over';bgmStop();sfx.over();$('field').classList.add('
 function showOver(){$('overScore').textContent=score.toLocaleString();
  $('overTitle').textContent=ALLC||stage>=20&&!E.length?'ALL CLEAR!':coop?'TEAM SCORE':'GAME OVER';
  $('overInfo').textContent='STAGE '+stage+(coop?' · with '+(coop.oppName||'친구'):'');
- lastWin={score,stage,mode:mode,saved:false};$('bSave').textContent='OK';$('bSave').disabled=false;$('nameIn').value=localStorage.getItem('twinstar-name')||'';
+ lastWin={score,stage,mode:mode+(coop?'-coop':''),saved:false};$('bSave').textContent='OK';$('bSave').disabled=false;$('nameIn').value=localStorage.getItem('twinstar-name')||'';
  $('bRetry').textContent=coop?'AGAIN':'RETRY';show('ovOver')}
 
 /* ===== 친구 화면 (방장 화면을 받아서 그대로 보여 줌) ===== */
@@ -445,11 +445,14 @@ const MODEK={easy:'EASY',normal:'NORMAL',hard:'HARD',master:'MASTER'},MODEC={EAS
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function local(){try{return JSON.parse(localStorage.getItem('twinstar-ranks')||'[]')}catch(e){return[]}}
 $('bSave').onclick=async()=>{if(!lastWin||lastWin.saved)return;const n=($('nameIn').value.trim()||'익명').slice(0,8);localStorage.setItem('twinstar-name',n);lastWin.saved=true;lastWin.n=n;$('bSave').textContent='…';$('bSave').disabled=true;
- const rec={n,s:lastWin.score,v:lastWin.stage,m:lastWin.mode};const l=local();l.push(rec);localStorage.setItem('twinstar-ranks',JSON.stringify(l.slice(-300)));
- try{await fetch(`${RANK_URL}?g=twinstar&a=add&n=${encodeURIComponent(n)}&s=${rec.s}&v=${rec.v}&m=${rec.m}`)}catch(e){}$('bSave').textContent='✓';openRank()};
-async function openRank(){show('ovRank');render(null,true);try{const j=await fetch(`${RANK_URL}?g=twinstar`).then(r=>r.json());render(j.top||[])}catch(e){render(local())}}
-function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}rows=rows.slice().sort((a,b)=>b.s-a.s);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
- $('rankList').innerHTML=rows.length?rows.map((r,i)=>{const m=MODEK[r.m]||String(r.m).toUpperCase();let cls='';if(mw&&!marked&&r.n===mw.n&&+r.s===mw.score){cls='me';marked=true}
+ const rec={n,s:lastWin.score,v:lastWin.stage,m:lastWin.mode,ts:Date.now()};const l=local();l.push(rec);localStorage.setItem('twinstar-ranks',JSON.stringify(l.slice(-300)));
+ try{await fetch(`${RANK_URL}?g=twinstar&a=add&n=${encodeURIComponent(n)}&s=${rec.s}&v=${rec.v}&m=${rec.m}`)}catch(e){}$('bSave').textContent='✓';openRank({mode:/-coop$/.test(lastWin.mode)?'coop':'solo',diff:lastWin.mode.split('-')[0],ver:window.phRk?phRk.vers('twinstar')[0].id:null})};
+/* 랭킹: SOLO·CO-OP × 난이도 × 버전 (게임:모드:난이도:버전). 예전 기록은 SOLO·CO-OP 구분이 없어 SOLO로 */
+let RSEL={},RROWS=null;const RMO=r=>/-coop$/.test(r.m||'')?'coop':'solo',RDF=r=>MODEK[String(r.m||'').split('-')[0]]?String(r.m).split('-')[0]:'normal';
+function rkBarInit(sel){if(window.phRk)RSEL=phRk.bar($('rkBar'),{game:'twinstar',modes:[['solo','SOLO'],['coop','CO-OP']],diffs:[['easy','EASY'],['normal','NORMAL'],['hard','HARD'],['master','MASTER']],sel,onChange:s=>{RSEL=s;if(RROWS)render(RROWS)}})}
+async function openRank(sel){sel=sel&&sel.diff?sel:(state==='title'?null:{mode:coop?'coop':'solo',diff:mode});show('ovRank');rkBarInit(sel);RROWS=null;render(null,true);try{const j=await fetch(`${RANK_URL}?g=twinstar`).then(r=>r.json());RROWS=j.top||[]}catch(e){RROWS=local()}render(RROWS)}
+function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}rows=rows.filter(r=>!window.phRk||(RMO(r)===RSEL.mode&&RDF(r)===RSEL.diff&&phRk.ver('twinstar',r)===RSEL.ver)).sort((a,b)=>b.s-a.s);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
+ $('rankList').innerHTML=rows.length?rows.map((r,i)=>{const m=(MODEK[String(r.m||'').split('-')[0]]||String(r.m).toUpperCase())+(RMO(r)==='coop'?' CO-OP':'');let cls='';if(mw&&!marked&&r.n===mw.n&&+r.s===mw.score){cls='me';marked=true}
   return `<div class="${cls}"><span class="r">${i+1}</span><span>${esc(r.n)}${window.phLv?phLv(m):''}</span><span class="s">${(+r.s).toLocaleString()}</span><span class="m">${r.v?'ST.'+esc(r.v):''}</span></div>`}).join(''):'<span class="em">아직 기록이 없어요</span>'}
 $('bRank').onclick=()=>{if(state==='play'&&!coop)togglePause();openRank()};$('bRank2').onclick=openRank;$('bRank3').onclick=openRank;
 
