@@ -78,7 +78,7 @@ html body .phDiff.phDiff.phDiff.last{background:color-mix(in srgb,var(--b) 18%,#
 </style>
 <script>/* 카톡 등 인앱 브라우저: 실제 보이는 높이로 화면 맞춤 */(function(){var d=document.documentElement;function f(){d.style.setProperty('--app-h',window.innerHeight+'px')}f();addEventListener('resize',f);addEventListener('orientationchange',function(){setTimeout(f,300)});addEventListener('pageshow',f);setTimeout(f,250);setTimeout(f,1000)})();</script>
 <style>html,body{height:var(--app-h,100dvh)!important}</style>
-<link rel="stylesheet" href="../games/ph.css?v=12"><style>#ovTitle{--phB:#4a4f9a;--phT:#dfe4ff;--phBg:#11132a;--phR:rgba(150,170,255,.12);--phC:rgba(220,226,255,.45);padding:0!important}
+<link rel="stylesheet" href="../games/ph.css?v=14"><style>#ovTitle{--phB:#4a4f9a;--phT:#dfe4ff;--phBg:#11132a;--phR:rgba(150,170,255,.12);--phC:rgba(220,226,255,.45);padding:0!important}
 .field{background:#06071a}
 .coop{position:absolute;left:8px;top:6px;z-index:2;font:700 9px "Silkscreen",monospace;letter-spacing:1px;color:#9aa6dc;pointer-events:none;display:none}
 .coop.on{display:block}
@@ -134,7 +134,7 @@ html body .phDiff.phDiff.phDiff.last{background:color-mix(in srgb,var(--b) 18%,#
     </div>
   </div></div>
 </div>
-<script src="../games/ph.js?v=22"></script>
+<script src="../games/ph.js?v=24"></script>
 <script src="../games/relay.js?v=1"></script>
 <script>
 (()=>{
@@ -229,7 +229,7 @@ function buildStage(){E=[];PB=[];EB=[];IT_=[];let n=0;
  const rows=[[2,3,4,5],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7]];
  rows.forEach((cs,r)=>cs.forEach(c=>{const k=r===0?2:r<3?1:0;const grp=r===0?0:r<3?1+(c>3?1:0):3+(c>3?1:0);
   const left=grp%2===0;E.push({id:nextId++,k,hp:EHP(k),c,r,x:-30,y:-30,st:'wait',t:0,delay:grp*1.15+(n%8)*.11,sx:left?-20:W+20,sy:H*.42,cx:left?W*.95:W*.05,cy:-60,fl:0});n++}));
- diveT=1.8;fireT=3;clearT=0;banner={t:stage===20?'FINAL STAGE':'STAGE '+stage+'/20',k:'stage',until:tGame+1.8}}
+ diveT=1.8;fireT=3;clearT=0;banner={t:stage===20?'FINAL STAGE':'STAGE '+stage+'/20',until:tGame+1.8}}
 let ALLC=false;
 function startGame(m){window.phLvTheme&&phLvTheme(m,$('field'));mode=m;stage=1;ALLC=false;FRZ=0;score=0;tGame=0;const L=MODES[m].life;lives=coop?L:L-1;P=coop?[newPlayer(0),newPlayer(1)]:[newPlayer(0)];FX=[];beam={ch:0,t:0,x:0,cd:3};buildStage();state='play';lastWin=null;
  ['ovTitle','ovMode','ovOver','ovPause','ovRank','ovWait'].forEach(hide);$('field').classList.remove('dead');hud();unlock();bgmStart();$('bPause').disabled=!!coop;PREF.set('lv',m)}
@@ -242,7 +242,7 @@ function ev(...a){if(coop&&coop.host)EV.push(a)}
 function step(dt){tGame+=dt;const M=MODES[mode];
  // 플레이어
  P.forEach((p,i)=>{if(p.out){ // 쓰러진 친구: 다른 사람이 SOS 캡슐 위에 머물면 구출
-   const mate=P.find((q,j)=>j!==i&&q.alive);if(mate&&Math.abs(mate.x-p.x)<22){p.rs=(p.rs||0)+dt;if(p.rs>=1.2){p.out=false;p.alive=true;p.inv=2.4;p.rs=0;sfx.rescue();ev('r',i);FX.push({txt:'RESCUE!',x:p.x,y:p.y-24,l:1.4,c:'gold'});hud()}}else p.rs=Math.max(0,(p.rs||0)-dt*.6);return}
+   const mate=P.find((q,j)=>j!==i&&q.alive);if(mate&&Math.abs(mate.x-p.x)<22){p.rs=(p.rs||0)+dt;if(p.rs>=1.2){p.out=false;p.alive=true;p.inv=2.4;p.rs=0;sfx.rescue();ev('r',i);FX.push({txt:'RESCUE!',x:p.x,y:p.y-24,l:1.4,c:'#8fe39a'});hud()}}else p.rs=Math.max(0,(p.rs||0)-dt*.6);return}
   if(!p.alive){p.re-=dt;if(p.re<=0&&!p.out){p.alive=true;p.inv=2.2;p.sh=false}return}
   if(p.tx!=null)p.x+=(p.tx-p.x)*(1-Math.exp(-dt*16)); /* 손가락을 부드럽게 따라옴 */
   p.x=Math.max(12,Math.min(W-12,p.x));p.inv=Math.max(0,p.inv-dt);p.pow=Math.max(0,p.pow-dt);
@@ -277,7 +277,7 @@ function step(dt){tGame+=dt;const M=MODES[mode];
  if(P.length===2){const a=P[0],b=P[1],both=a.alive&&b.alive;
   if(beam.t>0){beam.t-=dt;if(both)beam.x=(a.x+b.x)/2;for(const e of E){if(!e.dead&&e.st!=='wait'&&Math.abs(e.x-beam.x)<20&&e.y<H-120){e.hp=0;killE(e)}}EB=EB.filter(o=>Math.abs(o.x-beam.x)>=20);shakeT=Math.max(shakeT,.08)}
   else if(beam.cd>0)beam.cd-=dt;
-  else if(both&&Math.abs(a.x-b.x)<46&&!clearT){beam.ch=Math.min(1,beam.ch+dt/.8);if(beam.ch>=1){beam.t=1;beam.cd=7;beam.ch=0;beam.x=(a.x+b.x)/2;sfx.beam();ev('B');FX.push({txt:'TWIN BEAM!',x:W/2,y:H*.45,l:1.4,c:'gold'})}}
+  else if(both&&Math.abs(a.x-b.x)<46&&!clearT){beam.ch=Math.min(1,beam.ch+dt/.8);if(beam.ch>=1){beam.t=1;beam.cd=7;beam.ch=0;beam.x=(a.x+b.x)/2;sfx.beam();ev('B');FX.push({txt:'TWIN BEAM!',x:W/2,y:H*.45,l:1.4,c:'#ffffff'})}}
   else beam.ch=Math.max(0,beam.ch-dt*.7)}
  // 적 총알
  EB.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt});EB=EB.filter(b=>b.y<H+10&&b.x>-10&&b.x<W+10);
@@ -297,7 +297,7 @@ function step(dt){tGame+=dt;const M=MODES[mode];
  IT_.forEach(t=>{for(let i=0;i<P.length;i++){const p=P[i];if(p.alive&&Math.abs(t.x-p.x)<16&&Math.abs(t.y-p.y)<16){t.dead=1;getItem(t.k,i);break}}});IT_=IT_.filter(t=>!t.dead);
  // 파편
  // 스테이지 클리어
- if(!E.length&&!clearT){clearT=tGame;addScore(500*stage);const team=P.length===2&&P.every(p=>p.alive);if(team)addScore(500*stage);banner={t:team?'TEAM BONUS':'STAGE CLEAR',k:team?'gold':'stage',until:tGame+1.6};sfx.clear();ev('c',team?1:0);EB=[]}
+ if(!E.length&&!clearT){clearT=tGame;addScore(500*stage);const team=P.length===2&&P.every(p=>p.alive);if(team)addScore(500*stage);banner={t:team?'TEAM BONUS':'STAGE CLEAR',until:tGame+1.6};sfx.clear();ev('c',team?1:0);EB=[]}
  if(clearT&&tGame-clearT>2){if(stage>=20){ALLC=true;clearT=0;gameOver();return} /* 20스테이지 끝 */stage++;buildStage();ev('s',stage)}
  // 게임 오버
  if(P.every(p=>p.out)&&state==='play')gameOver();
@@ -309,7 +309,7 @@ function killPlayer(p,i){p.alive=false;boom(p.x,p.y,PC[i],26,true);sfx.hit();sha
 function getItem(k,i){const p=P[i];sfx.item();ev('i',i,k);
  if(k==='P')p.pow=10;else if(k==='S')p.sh=true;else if(k==='L'){p.lz=6;p.lzT=0}else if(k==='F'){FRZ=4;EB=[];shakeT=.2}
  else{const o=P.find(q=>q.out);if(o){o.out=false;o.alive=false;o.re=.3}else lives++}
- FX.push({txt:ITN[k],x:p.x,y:p.y-20,l:1,c:'item'});hud()}
+ FX.push({txt:ITN[k],x:p.x,y:p.y-20,l:1,c:ITC[k]});hud()}
 const ITN={P:'DOUBLE',S:'SHIELD',H:'1UP',L:'LASER!',F:'FREEZE!'};
 function gameOver(){state='over';bgmStop();sfx.over();$('field').classList.add('dead');
  if(coop&&coop.host)send({t:'over',s:score,st:stage});setTimeout(showOver,1300)}
@@ -327,11 +327,11 @@ function applySnap(d){snapA=snapB;snapB=d;snapAt=performance.now();
   if(k==='x'){boom(a[1],a[2],EC[a[3]][0],a[3]===2?22:14,a[3]===2);(a[3]===2?sfx.big:sfx.boom)()}
   else if(k==='t')sfx.tink();
   else if(k==='h'){boom(a[1],a[2],PC[a[3]],26,true);sfx.hit();shakeT=.35;if(a[3]===1)buzz(60)}
-  else if(k==='i'){sfx.item();const p=d.p[a[1]];if(p)FX.push({txt:ITN[a[2]]||'',x:p[0],y:H-108,l:1,c:'item'})}
-  else if(k==='c'){sfx.clear();banner={t:a[1]?'TEAM BONUS':'STAGE CLEAR',k:a[1]?'gold':'stage',until:tGame+1.6}}
-  else if(k==='B'){sfx.beam();FX.push({txt:'TWIN BEAM!',x:W/2,y:H*.45,l:1.4,c:'gold'})}
-  else if(k==='r'){sfx.rescue();const p=d.p[a[1]];if(p)FX.push({txt:'RESCUE!',x:p[0],y:H-112,l:1.4,c:'gold'})}
-  else if(k==='s'){banner={t:a[1]===20?'FINAL STAGE':'STAGE '+a[1]+'/20',k:'stage',until:tGame+1.8}}
+  else if(k==='i'){sfx.item();const p=d.p[a[1]];if(p)FX.push({txt:ITN[a[2]]||'',x:p[0],y:H-108,l:1,c:ITC[a[2]]})}
+  else if(k==='c'){sfx.clear();banner={t:a[1]?'TEAM BONUS':'STAGE CLEAR',until:tGame+1.6}}
+  else if(k==='B'){sfx.beam();FX.push({txt:'TWIN BEAM!',x:W/2,y:H*.45,l:1.4,c:'#ffffff'})}
+  else if(k==='r'){sfx.rescue();const p=d.p[a[1]];if(p)FX.push({txt:'RESCUE!',x:p[0],y:H-112,l:1.4,c:'#8fe39a'})}
+  else if(k==='s'){banner={t:a[1]===20?'FINAL STAGE':'STAGE '+a[1]+'/20',until:tGame+1.8}}
   else if(k==='d')sfx.dive()});
  hud()}
 function guestView(){const now=performance.now(),A=snapA||snapB,B=snapB;if(!B)return null;const u=Math.max(0,Math.min(1.2,(now-snapAt)/SI)),age=(now-snapAt)/1000;
@@ -376,19 +376,11 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#06071a';x.fillRect(0
   if(p.pow){x.fillStyle=PC[i];x.globalAlpha=.25;x.fillRect(p.x-14,p.y+12,28,2);x.globalAlpha=1}
   if(p.sh){x.strokeStyle='#7fe0ff';x.globalAlpha=.55+.25*Math.sin(performance.now()/120);x.lineWidth=1.5;x.beginPath();x.arc(p.x,p.y,16,0,6.3);x.stroke();x.globalAlpha=1}
   if(coop){x.font='700 8px Silkscreen,Galmuri11';x.textAlign='center';x.fillStyle=PC[i];x.fillText(i===me()?'YOU':(coop.oppName||'FRIEND').slice(0,8),p.x,p.y+22)}});
- const U=dpr/SC; /* CSS 1px = 게임 좌표 U */
- FX.forEach(f=>{f.l-=dt;if(f.txt){f.y-=20*dt;popTxt(f.txt,f.x,f.y,f.ko?12:20,f.c,Math.max(0,Math.min(1,f.l)),f.ko);return}
+ FX.forEach(f=>{f.l-=dt;if(f.txt){f.y-=20*dt;x.globalAlpha=Math.max(0,f.l);x.font='700 9px Silkscreen,Galmuri11,sans-serif';x.textAlign='center';x.fillStyle=f.c;x.fillText(f.txt,f.x,f.y);x.globalAlpha=1;return}
   f.x+=f.vx*dt;f.y+=f.vy*dt;f.vx*=.96;f.vy*=.96;x.globalAlpha=Math.max(0,f.l*1.6);x.fillStyle=f.c;x.fillRect(f.x,f.y,f.s,f.s);x.globalAlpha=1});FX=FX.filter(f=>f.l>0);
- if(banner&&tGame<banner.until){const left=banner.until-tGame;popTxt(banner.t,W/2,H*.55,banner.d===2?20:28,banner.k||'stage',Math.min(1,left/.3))}
+ if(banner&&tGame<banner.until){x.font='700 18px Silkscreen';x.textAlign='center';x.fillStyle='#fff';x.shadowColor='#9fb4ff';x.shadowBlur=12;x.fillText(banner.t,W/2,H*.55);x.shadowBlur=0}
  if(coop&&state==='play'){const mine=V.P[me()];if(mine&&mine.out){x.font='12px Galmuri11';x.textAlign='center';x.fillStyle='#ff8aa0';x.fillText('친구가 SOS 위에 와서 구해 줄 때까지 기다려요',W/2,H*.62)}}
  x.restore()}
-
-/* 게임 중 팝업 문구: 공통 모양 (Silkscreen · 어두운 외곽선 · 같은 색 빛) — px는 CSS 픽셀 */
-function popTxt(t,px0,py,css,col,al,ko){const U=dpr/SC,px=css*U;
- if(ko){x.save();x.globalAlpha=al;x.font=px+'px Galmuri11,sans-serif';x.textAlign='center';x.textBaseline='middle';x.lineJoin='round';x.lineWidth=Math.max(3*U,px*.2);x.strokeStyle='#08090f';x.strokeText(t,px0,py);x.fillStyle=window.phPopColor?phPopColor(col):col;x.fillText(t,px0,py);x.restore();return}
- x.save();x.font='700 '+px+'px Silkscreen';try{x.letterSpacing=Math.round(px*.1)+'px'}catch(e){}const w=x.measureText(String(t).toUpperCase()).width;x.restore();
- const cx=Math.max(w/2+4,Math.min(W-w/2-4,px0)); /* 화면 밖으로 안 나가게 */
- if(window.phPopDraw)phPopDraw(x,t,cx,py,px,col,al);else{x.save();x.globalAlpha=al;x.font='700 '+px+'px Silkscreen';x.textAlign='center';x.fillStyle='#fff';x.fillText(t,cx,py);x.restore()}}
 
 /* ===== 조작 ===== */
 const keys={};addEventListener('keydown',e=>{keys[e.key]=1;if(e.key==='Escape'||e.key==='p')togglePause()});addEventListener('keyup',e=>keys[e.key]=0);
@@ -435,7 +427,7 @@ $('bSet').onclick=()=>{if(!window.phSettings)return;const inGame=state==='play'|
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play'&&!coop)togglePause()});
 $('bStart').onclick=()=>{unlock();if(coop)leaveCoop(true);show('ovMode')};
 $('bModeX').onclick=()=>{hide('ovMode');if(coop&&coop.host)leaveCoop()};
-const TUT={"goal":"쏟아지는 우주 벌레를 모두 물리치면 다음 스테이지!<br>총은 자동으로 나가요. 친구와 함께라면<br>가까이 붙어서 트윈 빔! 쓰러지면 SOS로 구출!","touch":[["← 밀기 →","비행기 옮기기"],["둘이 붙기","트윈 빔 충전"],["SOS 위에 머물기","쓰러진 친구 구출"],["P · S · 1UP","두 발 · 방패 · 목숨"]],"pc":[["← → / 마우스","비행기 옮기기"],["둘이 붙기","트윈 빔 충전"],["SOS 위에 머물기","쓰러진 친구 구출"],["P · S · 1UP","두 발 · 방패 · 목숨"]]};
+const TUT={"goal":"쏟아지는 우주 벌레를 모두 물리쳐요!<br>친구와 딱 붙으면 트윈 빔 발사!","touch":[["← 밀기 →","비행기 옮기기"],["둘이 붙기","트윈 빔 충전"],["SOS 위에 머물기","쓰러진 친구 구출"],["P · S · 1UP","두 발 · 방패 · 목숨"]],"pc":[["← → / 마우스","비행기 옮기기"],["둘이 붙기","트윈 빔 충전"],["SOS 위에 머물기","쓰러진 친구 구출"],["P · S · 1UP","두 발 · 방패 · 목숨"]]};
 document.querySelectorAll('#ovMode [data-m]').forEach(b=>b.onclick=()=>{const m=b.dataset.m;
  if(coop&&coop.host){if(!coop.conn||!coop.conn.open)return;hide('ovMode');send({t:'go',m});countdown(()=>startGame(m),m);return}
  phTut('twinstar-tut',TUT,()=>startGame(m))});
@@ -500,7 +492,7 @@ function againCheck(){if(!coop.host)return;if(coop.meReady&&coop.oppReady){hide(
 $('waitX').onclick=()=>{hide('ovWait');toMenu()};
 function lost(){if(!coop)return;const wasHost=coop.host;tag();
  if(wasHost&&state==='play'){ // 방장은 혼자 계속
-  const p=P[1];if(p){p.out=true;p.alive=false}banner={t:'SOLO',k:'warn',d:2,until:tGame+1.6};FX.push({txt:(coop.oppName||'친구')+'님이 나갔어요',x:W/2,y:H*.62,l:2.5,c:'warn',ko:1});
+  const p=P[1];if(p){p.out=true;p.alive=false}banner={t:'SOLO',until:tGame+1.6};FX.push({txt:(coop.oppName||'친구')+'님이 나갔어요',x:W/2,y:H*.62,l:2.5,c:'#ff8aa0'});
   try{coop.peer&&coop.peer.destroy()}catch(e){}coop=null;tag();$('bPause').disabled=false;return}
  const inGame=state==='play';try{coop.peer&&coop.peer.destroy()}catch(e){}coop=null;tag();
  if(inGame){state='over';bgmStop()}
