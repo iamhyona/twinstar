@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793530000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793560000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>TWIN STAR · 트윈스타</title>
@@ -134,7 +134,7 @@ html body .phDiff.phDiff.phDiff.last{background:color-mix(in srgb,var(--b) 18%,#
     </div>
   </div></div>
 </div>
-<script src="../games/ph.js?v=33"></script>
+<script src="../games/ph.js?v=34"></script>
 <script src="../games/relay.js?v=1"></script>
 <script>
 (()=>{
@@ -314,7 +314,7 @@ function step(dt){tGame+=dt;const M=MODES[mode];
  IT_.forEach(t=>{for(let i=0;i<P.length;i++){const p=P[i];if(p.alive&&Math.abs(t.x-p.x)<16&&Math.abs(t.y-p.y)<16){t.dead=1;getItem(t.k,i);break}}});IT_=IT_.filter(t=>!t.dead);
  // 파편
  // 스테이지 클리어
- if(!E.length&&!clearT){clearT=tGame;addScore(500*stage);const team=P.length===2&&P.every(p=>p.alive);if(team)addScore(500*stage);banner={t:team?'TEAM BONUS':'STAGE CLEAR',until:tGame+1.6};sfx.clear();ev('c',team?1:0);EB=[]}
+ if(!E.length&&!clearT){clearT=tGame;addScore(500*stage);const team=P.length===2&&P.every(p=>p.alive);if(team)addScore(500*stage);banner={t:team?'TEAM BONUS':'STAGE CLEAR',until:tGame+1.6};sfx.clear();window.phHaptic&&phHaptic([30,40,60]);ev('c',team?1:0);EB=[]}
  if(clearT&&tGame-clearT>2){if(stage>=20){ALLC=true;clearT=0;gameOver();return} /* 20스테이지 끝 */stage++;buildStage();ev('s',stage)}
  // 게임 오버
  if(P.every(p=>p.out)&&state==='play')gameOver();
@@ -323,12 +323,12 @@ function killE(e){if(e.dead)return;e.dead=1;const div=e.st==='dive';addScore([50
  if(Math.random()<(e.k===2?.3:.075)){const r=Math.random();IT_.push({x:e.x,y:e.y,k:r<.28?'P':r<.48?'S':r<.6?'H':r<.8?'L':'F'})} /* 아이템: 더블·방패·1UP·레이저·얼음 */}
 function killPlayer(p,i){p.alive=false;boom(p.x,p.y,PC[i],26,true);sfx.hit();shakeT=.35;ev('h',p.x,p.y,i);if(i===me())buzz(60);
  if(lives>0){lives--;p.re=1.3}else{p.out=true;p.rs=0}hud()}
-function getItem(k,i){const p=P[i];sfx.item();ev('i',i,k);
+function getItem(k,i){const p=P[i];sfx.item();if(i===me())buzz(14);ev('i',i,k);
  if(k==='P')p.pow=10;else if(k==='S')p.sh=true;else if(k==='L'){p.lz=6;p.lzT=0}else if(k==='F'){FRZ=4;EB=[];shakeT=.2}
  else{const o=P.find(q=>q.out);if(o){o.out=false;o.alive=false;o.re=.3}else lives++}
  FX.push({txt:ITN[k],x:p.x,y:p.y-20,l:1,c:ITC[k]});hud()}
 const ITN={P:'DOUBLE',S:'SHIELD',H:'1UP',L:'LASER!',F:'FREEZE!'};
-function gameOver(){state='over';bgmStop();sfx.over();$('field').classList.add('dead');
+function gameOver(){state='over';bgmStop();sfx.over();window.phHaptic&&phHaptic([60,40,120]);$('field').classList.add('dead');
  if(coop&&coop.host)send({t:'over',s:score,st:stage});setTimeout(showOver,1300)}
 function showOver(){$('overScore').textContent=score.toLocaleString();
  $('overTitle').textContent=ALLC||stage>=20&&!E.length?'ALL CLEAR!':coop?'TEAM SCORE':'GAME OVER';
@@ -412,7 +412,7 @@ fld.addEventListener('pointermove',e=>{if(state!=='play')return;const k=dpr/SC;
  if(!drag||drag.id!==e.pointerId)return;setMyX(drag.sx+(e.clientX-drag.fx)*k*1.25)});
 ['pointerup','pointercancel'].forEach(t=>fld.addEventListener(t,e=>{if(drag&&drag.id===e.pointerId)drag=null}));
 fld.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
-function buzz(ms){if(!HAP)return;try{if(navigator.vibrate)navigator.vibrate(ms)}catch(e){}}
+function buzz(ms){if(!HAP)return;if(window.phHaptic)phHaptic(ms)}
 
 /* ===== 루프 ===== */
 let lastT=0,sendT=0,inT=0,lastSentX=-1;
@@ -500,7 +500,7 @@ function onData(d){if(!d||typeof d!=='object'||!coop)return;
  // 친구 쪽
  if(d.t==='go'){hide('ovWait');hide('ovOver');countdown(()=>{mode=d.m;window.phLvTheme&&phLvTheme(d.m,$('field'));stage=1;score=0;tGame=0;snapA=snapB=null;myX=W*.66;lastSentX=-1;FX=[];state='play';$('field').classList.remove('dead');hide('ovRank');bgmStart();$('bPause').disabled=true;hud()},d.m,true);return}
  if(d.t==='s'){if(state==='play')applySnap(d);return}
- if(d.t==='over'){if(state!=='play')return;score=d.s;stage=d.st;state='over';bgmStop();sfx.over();$('field').classList.add('dead');setTimeout(showOver,1300);return}
+ if(d.t==='over'){if(state!=='play')return;score=d.s;stage=d.st;state='over';bgmStop();sfx.over();window.phHaptic&&phHaptic([60,40,120]);$('field').classList.add('dead');setTimeout(showOver,1300);return}
  if(d.t==='again'){coop.oppReady=true;if(coop.meReady){$('waitMsg').textContent='친구가 난이도를 고르는 중…'}return}}
 function countdown(go,m,guest){let n=3;const tick=()=>{if(!coop||!coop.conn||!coop.conn.open){closeM();return}if(n>0){modal(coop.oppName?'WITH '+esc(coop.oppName):'CO-OP',`<div class="phV-count">${n}</div><p class="phV-m">${MODEK[m]}</p>`,false);n--;setTimeout(tick,800)}else{closeM();coop.meReady=coop.oppReady=false;go()}};tick()}
 function again(){if(!coop||!coop.conn||!coop.conn.open){toMenu();return}coop.meReady=true;send({t:'again'});hide('ovOver');
