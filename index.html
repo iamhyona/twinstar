@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793426313";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793428525";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>TWIN STAR · 트윈스타</title>
@@ -78,7 +78,7 @@ html body .phDiff.phDiff.phDiff.last{background:color-mix(in srgb,var(--b) 18%,#
 </style>
 <script>/* 카톡 등 인앱 브라우저: 실제 보이는 높이로 화면 맞춤 */(function(){var d=document.documentElement;function f(){d.style.setProperty('--app-h',window.innerHeight+'px')}f();addEventListener('resize',f);addEventListener('orientationchange',function(){setTimeout(f,300)});addEventListener('pageshow',f);setTimeout(f,250);setTimeout(f,1000)})();</script>
 <style>html,body{height:var(--app-h,100dvh)!important}</style>
-<link rel="stylesheet" href="../games/ph.css?v=22"><style>#ovTitle{--phB:#4a4f9a;--phT:#dfe4ff;--phBg:#11132a;--phR:rgba(150,170,255,.12);--phC:rgba(220,226,255,.45);padding:0!important}
+<link rel="stylesheet" href="../games/ph.css?v=23"><style>#ovTitle{--phB:#4a4f9a;--phT:#dfe4ff;--phBg:#11132a;--phR:rgba(150,170,255,.12);--phC:rgba(220,226,255,.45);padding:0!important}
 .field{background:#06071a}
 .coop{position:absolute;left:8px;top:6px;z-index:2;font:700 9px "Silkscreen",monospace;letter-spacing:1px;color:#9aa6dc;pointer-events:none;display:none}
 .coop.on{display:block}
@@ -147,7 +147,7 @@ html.pp .phS-show.hg>i::before{content:'';position:absolute;left:50%;top:-25px;w
     </div>
   </div></div>
 </div>
-<script src="../games/ph.js?v=39"></script>
+<script src="../games/ph.js?v=40"></script>
 <script src="../games/relay.js?v=1"></script>
 <script>
 (()=>{
@@ -198,16 +198,16 @@ function tone(type,f1,f2,dur,vol,delay){if(!ac||!AUD.sfx())return;const t=ac.cur
 let NZ=null;function nz(){if(ac&&(!NZ||NZ.sampleRate!==ac.sampleRate)){const n=ac.sampleRate*.6|0;NZ=ac.createBuffer(1,n,ac.sampleRate);const c=NZ.getChannelData(0);for(let i=0;i<n;i++)c[i]=Math.random()*2-1}}
 function noise(dur,vol,freq){if(!ac||!AUD.sfx())return;nz();
  const t=ac.currentTime,s=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();s.buffer=NZ;f.type='lowpass';f.frequency.setValueAtTime(freq||2400,t);f.frequency.exponentialRampToValueAtTime(120,t+dur);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);s.connect(f).connect(g).connect(out());s.start(t);s.stop(t+dur)}
-const sfx={ /* 효과음 (2026-10-30): 우주 레이저 톤 · 너무 요란하지 않게 */
- shot:()=>{tone('sine',1700,520,.08,.05);tone('triangle',3400,1040,.05,.012)},
- boom:()=>{noise(.32,.15,2200);tone('sine',180,45,.25,.09)},
- big:()=>{noise(.6,.2,2800);tone('sine',120,30,.55,.13);tone('sawtooth',90,40,.4,.03)},
- tink:()=>tone('triangle',1500,2100,.06,.05),
- hit:()=>{noise(.7,.24,1600);tone('sawtooth',320,40,.6,.06);tone('sine',90,30,.6,.12)},
+const sfx={ /* 효과음 (2026-10-31): 팡팡이처럼 동글동글 · 귀 아프지 않게 (높은 소리·노이즈 줄임) */
+ shot:()=>{tone('sine',1150,680,.07,.032);tone('sine',2300,1360,.04,.006)},
+ boom:()=>{tone('sine',560,240,.12,.075);tone('sine',1120,480,.05,.014);noise(.12,.035,900)},
+ big:()=>{tone('sine',360,130,.32,.1);tone('sine',720,260,.18,.025);noise(.25,.05,700)},
+ tink:()=>tone('sine',1250,1550,.05,.035),
+ hit:()=>{tone('sine',620,150,.45,.1);tone('sine',310,75,.5,.06);noise(.2,.04,600)},
  item:()=>[784,1047,1568].forEach((f,i)=>tone('triangle',f,0,.12,.07,i*.06)),
  clear:()=>[523,659,784,1047,1319].forEach((f,i)=>tone('triangle',f,0,.2,.07,i*.09)),
- dive:()=>tone('sine',900,260,.4,.035),
- beam:()=>{tone('sawtooth',220,880,.5,.05);tone('sine',440,1760,.6,.07);noise(.6,.1,4000)},
+ dive:()=>tone('sine',900,260,.4,.03),
+ beam:()=>{tone('sine',330,990,.5,.05);tone('sine',660,1980,.5,.02)},
  rescue:()=>[523,784,1047,1319].forEach((f,i)=>tone('triangle',f,0,.14,.08,i*.07)),
  over:()=>[392,330,262,196].forEach((f,i)=>tone('triangle',f,f*.97,.4,.09,i*.3))};
 /* 배경음 (2026-10-30 v2): 처지지 않게 — 132BPM · 킥 4박 + 스네어 + 16분 아르페지오 + 멜로디 훅 + 메아리 */
@@ -482,7 +482,7 @@ $('bSave').onclick=async()=>{if(!lastWin||lastWin.saved)return;const n=($('nameI
 /* 랭킹: 모드별 (SOLO · CO-OP). 예전 기록은 구분이 없어 SOLO로 */
 let RMODE='solo',RROWS=null;const RMO=r=>/-coop$/.test(r.m||'')?'coop':'solo';
 async function openRank(mo){RMODE=mo==='coop'||mo==='solo'?mo:'solo';if(window.phRk)phRk.bar($('rkBar'),{game:'twinstar',modes:[['solo','SOLO'],['coop','CO-OP']],sel:{mode:RMODE},onChange:s=>{RMODE=s.mode;if(RROWS)render(RROWS)}});show('ovRank');RROWS=null;render(null,true);try{const j=await fetch(`${RANK_URL}?g=twinstar`).then(r=>r.json());RROWS=j.top||[]}catch(e){RROWS=local()}render(RROWS)}
-function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}rows=rows.filter(r=>RMO(r)===RMODE).sort((a,b)=>b.s-a.s);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
+function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em"><span class="phLoad">LOADING</span></span>';return}rows=rows.filter(r=>RMO(r)===RMODE).sort((a,b)=>b.s-a.s);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
  $('rankList').innerHTML=rows.length?rows.map((r,i)=>{const m=MODEK[String(r.m||'').split('-')[0]]||String(r.m).toUpperCase();let cls='';if(mw&&!marked&&r.n===mw.n&&+r.s===mw.score){cls='me';marked=true}
   return `<div class="${cls}"><span class="r">${i+1}</span><span><em class="nm">${esc(r.n)}</em>${window.phLv?phLv(m):''}</span><span class="s">${(+r.s).toLocaleString()}</span><span class="m">${r.v?'ST.'+esc(r.v):''}</span></div>`}).join(''):'<span class="em">아직 기록이 없어요</span>'}
 $('bRank2').onclick=openRank;$('bRank3').onclick=openRank;
@@ -548,7 +548,7 @@ resize();hud();requestAnimationFrame(loop);
 (function(){var K='twinstar-skin';var IM={};window.PPI=IM;var SV=window.PPSV||{};
 for(var k in SV){var i=new Image();i.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(SV[k]);IM[k]=i}
 window.PPU=function(k){return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(SV[k])};
-function get(){try{return localStorage.getItem(K)!=='cl'}catch(e){return true}}
+function get(){return true} /* 2026-10-31 항상 PANGPANG로 시작 */
 function set(v){window.PPM=v;document.documentElement.classList.toggle('pp',v);try{localStorage.setItem(K,v?'pp':'cl')}catch(e){}document.querySelectorAll('.ppTg button').forEach(function(b){b.classList.toggle('on',(b.dataset.s==='pp')===v)});var sh=document.querySelector('.phS .phS-show')||document.querySelector('.phS-show');if(sh)try{skin(sh,v)}catch(e){}}
 window.PPM=get();document.documentElement.classList.toggle('pp',window.PPM);
 function skin(sh,on){var cs=[].slice.call(sh.querySelectorAll('canvas'));var K=['e2','e1','e3','4','11'];cs.forEach(function(c,i){if(!c._o){var o=document.createElement('canvas');o.width=c.width;o.height=c.height;o.getContext('2d').drawImage(c,0,0);c._o=o;c._w=c.width;c._h=c.height;c._sw=c.style.width;c._sh=c.style.height}
