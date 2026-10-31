@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793417029";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793426313";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>TWIN STAR · 트윈스타</title>
@@ -78,7 +78,7 @@ html body .phDiff.phDiff.phDiff.last{background:color-mix(in srgb,var(--b) 18%,#
 </style>
 <script>/* 카톡 등 인앱 브라우저: 실제 보이는 높이로 화면 맞춤 */(function(){var d=document.documentElement;function f(){d.style.setProperty('--app-h',window.innerHeight+'px')}f();addEventListener('resize',f);addEventListener('orientationchange',function(){setTimeout(f,300)});addEventListener('pageshow',f);setTimeout(f,250);setTimeout(f,1000)})();</script>
 <style>html,body{height:var(--app-h,100dvh)!important}</style>
-<link rel="stylesheet" href="../games/ph.css?v=21"><style>#ovTitle{--phB:#4a4f9a;--phT:#dfe4ff;--phBg:#11132a;--phR:rgba(150,170,255,.12);--phC:rgba(220,226,255,.45);padding:0!important}
+<link rel="stylesheet" href="../games/ph.css?v=22"><style>#ovTitle{--phB:#4a4f9a;--phT:#dfe4ff;--phBg:#11132a;--phR:rgba(150,170,255,.12);--phC:rgba(220,226,255,.45);padding:0!important}
 .field{background:#06071a}
 .coop{position:absolute;left:8px;top:6px;z-index:2;font:700 9px "Silkscreen",monospace;letter-spacing:1px;color:#9aa6dc;pointer-events:none;display:none}
 .coop.on{display:block}
@@ -86,7 +86,8 @@ html body .phDiff.phDiff.phDiff.last{background:color-mix(in srgb,var(--b) 18%,#
 .coop.bad i{background:#e8284f;box-shadow:0 0 6px #e8284f}
 .wait{font:13px/1.8 Galmuri11,sans-serif;color:var(--g2)}
 .field.dead canvas{filter:grayscale(1) brightness(.55);transition:filter 1.2s ease}
-</style><style id="ppSkinCss">/* 팡팡이 모드 (2026-10-31): 시작 화면 CLASSIC / PANGPANG 선택 (랭킹 탭과 같은 둥근 통) · 원래 모션 그대로 그림만 팡팡이 */
+</style><style id="ppSkinCss">html.pp .phS-show.mv-twin{gap:6px}html.pp .phS-show.mv-twin>canvas,html.pp .phS-show.mv-twin>canvas.ship{margin:0!important} /* 팡팡이 5개 같은 간격 (2026-10-31) */
+/* 팡팡이 모드 (2026-10-31): 시작 화면 CLASSIC / PANGPANG 선택 (랭킹 탭과 같은 둥근 통) · 원래 모션 그대로 그림만 팡팡이 */
 .ppTg.phSeg{margin:2px auto 16px!important}
 .ppTg.phSeg>.phSegK{background:var(--tgOn,#10b870)!important}
 .ppTg.phSeg>button{font:400 10px "Silkscreen",monospace!important;letter-spacing:.16em!important;color:#8b8fa8!important;cursor:pointer}
@@ -98,7 +99,7 @@ html.pp .phS-show.hg{height:60px;align-items:flex-end}
 html.pp .phS-show.hg>i{position:relative;margin-top:22px}
 html.pp .phS-show.hg>i::before{content:'';position:absolute;left:50%;top:-25px;width:24px;height:24px;transform:translateX(-50%);background:var(--ppDrop) center/contain no-repeat}
 </style>
-</head>
+<style id="startBg">html body #ovTitle{background:#0a0c1d!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important} /* 시작 화면 바탕색 다른 게임과 같게 (2026-10-31) */</style></head>
 <body>
 <div class="gb">
   <div class="lcd-label"><i class="ln"></i><span class="copy">© 2026 PARK HYONA</span><i class="ln"></i></div>
@@ -146,7 +147,7 @@ html.pp .phS-show.hg>i::before{content:'';position:absolute;left:50%;top:-25px;w
     </div>
   </div></div>
 </div>
-<script src="../games/ph.js?v=36"></script>
+<script src="../games/ph.js?v=39"></script>
 <script src="../games/relay.js?v=1"></script>
 <script>
 (()=>{
@@ -255,8 +256,16 @@ addEventListener('resize',resize);if(window.visualViewport)visualViewport.addEve
 function newPlayer(i){return{x:coop?(i?W*.66:W*.34):W/2,y:H-110,alive:true,out:false,inv:2,re:0,pow:0,sh:false,cd:0,tx:null}}
 function slot(e){return{x:W/2+(e.c-3.5)*31+Math.sin(tGame*.9)*16,y:52+e.r*27+Math.sin(tGame*1.7+e.c)*1.5}}
 function buildStage(){E=[];PB=[];EB=[];IT_=[];let n=0;
- const rows=[[2,3,4,5],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7]];
- rows.forEach((cs,r)=>cs.forEach(c=>{const k=r===0?2:r<3?1:0;const grp=r===0?0:r<3?1+(c>3?1:0):3+(c>3?1:0);
+ /* 2026-10-31: 스테이지마다 배치·악당 구성이 바뀜 (5가지 배치 × 3가지 악당 구성) */
+ const A=[0,1,2,3,4,5,6,7],FORM=[
+  [[2,3,4,5],A,A,A,A],
+  [[3,4],[2,3,4,5],[1,2,3,4,5,6],[0,1,2,5,6,7],[0,1,6,7]],
+  [[1,3,4,6],[0,2,4,6],[1,3,5,7],[0,2,4,6],[1,3,5,7]],
+  [[0,1,6,7],[0,1,2,5,6,7],A,[0,1,2,5,6,7],[0,1,6,7]],
+  [[3,4],[1,2,5,6],[0,3,4,7],[1,2,5,6],[2,3,4,5]]],
+  KMAP=[r=>r===0?2:r<3?1:0,r=>r<2?2:r<4?1:0,r=>r===0?2:r%2?0:1],
+  rows=FORM[(stage-1)%FORM.length],km=KMAP[Math.floor((stage-1)/FORM.length)%KMAP.length];
+ rows.forEach((cs,r)=>cs.forEach(c=>{const k=km(r);const grp=r===0?0:r<3?1+(c>3?1:0):3+(c>3?1:0);
   const left=grp%2===0;E.push({id:nextId++,k,hp:EHP(k),c,r,x:-30,y:-30,st:'wait',t:0,delay:grp*1.15+(n%8)*.11,sx:left?-20:W+20,sy:H*.42,cx:left?W*.95:W*.05,cy:-60,fl:0});n++}));
  diveT=1.8;fireT=3;clearT=0;banner={t:stage===20?'FINAL STAGE':'STAGE '+stage+'/20',until:tGame+1.8}}
 let ALLC=false;
@@ -274,7 +283,7 @@ function step(dt){tGame+=dt;const M=MODES[mode];
    const mate=P.find((q,j)=>j!==i&&q.alive);if(mate&&Math.abs(mate.x-p.x)<22){p.rs=(p.rs||0)+dt;if(p.rs>=1.2){p.out=false;p.alive=true;p.inv=2.4;p.rs=0;sfx.rescue();ev('r',i);FX.push({txt:'RESCUE!',x:p.x,y:p.y-24,l:1.4,c:'#8fe39a'});hud()}}else p.rs=Math.max(0,(p.rs||0)-dt*.6);return}
   if(!p.alive){p.re-=dt;if(p.re<=0&&!p.out){p.alive=true;p.inv=2.2;p.sh=false}return}
   if(p.tx!=null)p.x+=(p.tx-p.x)*(1-Math.exp(-dt*16)); /* 손가락을 부드럽게 따라옴 */
-  p.x=Math.max(12,Math.min(W-12,p.x));p.inv=Math.max(0,p.inv-dt);p.pow=Math.max(0,p.pow-dt);
+  p.x=Math.max(12,Math.min(W-12,p.x));p.inv=Math.max(0,p.inv-dt);if(!(p.lz>0))p.pow=Math.max(0,p.pow-dt); /* 레이저 쓰는 동안 더블 시간은 멈춤 */
   if(p.lz>0){p.lz=Math.max(0,p.lz-dt);p.lzT=(p.lzT||0)-dt;if(p.lzT<=0){p.lzT=.09;for(const e of E){if(!e.dead&&e.st!=='wait'&&Math.abs(e.x-p.x)<10&&e.y<p.y){e.hp-=FRZ>0?99:1;e.fl=.08;if(e.hp<=0)killE(e)}}EB=EB.filter(o=>!(Math.abs(o.x-p.x)<9&&o.y<p.y))}} /* 레이저: 관통 + 적 미사일 지움 */
   p.cd-=dt;if(p.cd<=0&&!clearT){p.cd=p.pow?.17:.26;const mine=PB.filter(b=>b.o===i).length;if(mine<(p.pow?8:4)){if(p.pow){PB.push({x:p.x-6,y:p.y-12,o:i},{x:p.x+6,y:p.y-12,o:i})}else PB.push({x:p.x,y:p.y-12,o:i});if(i===me())sfx.shot()}}});
  PB.forEach(b=>b.y-=430*dt);PB=PB.filter(b=>b.y>-10);
@@ -336,7 +345,7 @@ function killE(e){if(e.dead)return;e.dead=1;const div=e.st==='dive';addScore([50
 function killPlayer(p,i){p.alive=false;boom(p.x,p.y,PC[i],26,true);sfx.hit();shakeT=.35;ev('h',p.x,p.y,i);if(i===me())buzz(60);
  if(lives>0){lives--;p.re=1.3}else{p.out=true;p.rs=0}hud()}
 function getItem(k,i){const p=P[i];sfx.item();if(i===me())buzz(14);ev('i',i,k);
- if(k==='P')p.pow=10;else if(k==='S')p.sh=true;else if(k==='L'){p.lz=6;p.lzT=0}else if(k==='F'){FRZ=4;EB=[];shakeT=.2}
+ if(k==='P'){p.pow=10;if(p.lz>0)p.lz+=2} /* 레이저 중 더블: 레이저 유지 + 2초 (2026-10-31) */else if(k==='S')p.sh=true;else if(k==='L'){p.lz=6;p.lzT=0}else if(k==='F'){FRZ=4;EB=[];shakeT=.2}
  else{const o=P.find(q=>q.out);if(o){o.out=false;o.alive=false;o.re=.3}else lives++}
  FX.push({txt:ITN[k],x:p.x,y:p.y-20,l:1,c:ITC[k]});hud()}
 const ITN={P:'DOUBLE',S:'SHIELD',H:'1UP',L:'LASER!',F:'FREEZE!'};
@@ -387,7 +396,7 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#06071a';x.fillRect(0
  x.save();
  let V;if(coop&&!coop.host&&state!=='title'){V=guestView()||{E:[],EB:[],PB:[],IT:[],P:[]}}else V={FZ:FRZ>0,E,EB,PB,IT:IT_,P,BM:{x:beam.x,t:beam.t>0?1:0,ch:beam.ch,cd:beam.cd>0?1:0}};
  const anim=Math.floor(tGame*3)%2;
- V.E.forEach(e=>{const nm=['bee','moth','boss'][e.k]+(anim?'2':'');let c=EC[e.k];if(e.k===2&&e.hp<2)c=EC[3];if(V.FZ)c=['#bfefff','#5fb8ff'];if(e.fl>0)c=['#ffffff','#ffffff'];drawSpr(nm,e.x,e.y,2,c[0],c[1]);if(V.FZ){x.strokeStyle='rgba(191,239,255,.7)';x.lineWidth=1;x.strokeRect(Math.round(e.x)-10,Math.round(e.y)-9,20,18)}});
+ V.E.forEach(e=>{const nm=['bee','moth','boss'][e.k]+(anim?'2':'');let c=EC[e.k];if(e.k===2&&e.hp<2)c=EC[3];if(V.FZ)c=['#bfefff','#5fb8ff'];if(e.fl>0)c=['#ffffff','#ffffff'];window.__eh=(V.FZ||e.fl>0)?0:[0,0,50,110,160,200,260,310][((e.r||0)+(e.c>3?1:0)+stage*3)%8];drawSpr(nm,e.x,e.y,2,c[0],c[1]);if(V.FZ){x.strokeStyle='rgba(191,239,255,.7)';x.lineWidth=1;x.strokeRect(Math.round(e.x)-10,Math.round(e.y)-9,20,18)}});
  V.PB.forEach(b=>{if(window.PPM&&window.ppShot){ppShot(x,b.x,b.y,PC[b.o]);return}x.fillStyle=PC[b.o];x.fillRect(Math.round(b.x)-1,Math.round(b.y)-5,2,8);x.fillStyle='#fff';x.fillRect(Math.round(b.x)-1,Math.round(b.y)-5,2,3)});
  {const bl=Math.floor(performance.now()/110)%2;V.EB.forEach(b=>{const X=Math.round(b.x),Y=Math.round(b.y);const sp=Math.hypot(b.vx||0,b.vy||1)||1,tx=(b.vx||0)/sp,ty=(b.vy||1)/sp;x.fillStyle='rgba(255,90,60,.35)';x.fillRect(Math.round(X-tx*7)-2,Math.round(Y-ty*7)-2,4,4);x.fillStyle='rgba(255,60,90,.3)';x.fillRect(X-6,Y-6,12,12);x.fillStyle=bl?'#ff3b5c':'#ffb02e';x.fillRect(X-4,Y-4,8,8);x.fillStyle='#fff';x.fillRect(X-2,Y-2,4,4)})} /* 적 미사일: 크고 반짝이게 */
  V.IT.forEach(t=>{const m=IT[t.k];x.fillStyle='rgba(255,255,255,.12)';x.fillRect(t.x-9,t.y-9,18,18);x.strokeStyle=ITC[t.k];x.lineWidth=1.5;x.strokeRect(t.x-9,t.y-9,18,18);x.fillStyle=ITC[t.k];m.forEach((row,yy)=>[...row].forEach((v,xx)=>{if(v==='1')x.fillRect(t.x-5+xx*2,t.y-5+yy*2,2,2)}))});
@@ -543,10 +552,10 @@ function get(){try{return localStorage.getItem(K)!=='cl'}catch(e){return true}}
 function set(v){window.PPM=v;document.documentElement.classList.toggle('pp',v);try{localStorage.setItem(K,v?'pp':'cl')}catch(e){}document.querySelectorAll('.ppTg button').forEach(function(b){b.classList.toggle('on',(b.dataset.s==='pp')===v)});var sh=document.querySelector('.phS .phS-show')||document.querySelector('.phS-show');if(sh)try{skin(sh,v)}catch(e){}}
 window.PPM=get();document.documentElement.classList.toggle('pp',window.PPM);
 function skin(sh,on){var cs=[].slice.call(sh.querySelectorAll('canvas'));var K=['e2','e1','e3','4','11'];cs.forEach(function(c,i){if(!c._o){var o=document.createElement('canvas');o.width=c.width;o.height=c.height;o.getContext('2d').drawImage(c,0,0);c._o=o;c._w=c.width;c._h=c.height;c._sw=c.style.width;c._sh=c.style.height}
- var x=c.getContext('2d');if(on){var im=PPI[K[i]||'e2'];var go=function(){c.width=c.height=64;c.style.width=c.style.height=(c.classList.contains('ship')?32:28)+'px';x.clearRect(0,0,64,64);x.drawImage(im,0,0,64,64)};if(im.complete)go();else im.onload=go}
+ var x=c.getContext('2d');if(on){var im=PPI[K[i]||'e2'];var go=function(){c.width=c.height=64;c.style.width=c.style.height='30px';x.clearRect(0,0,64,64);x.drawImage(im,0,0,64,64)};if(im.complete)go();else im.onload=go}
  else{c.width=c._w;c.height=c._h;c.style.width=c._sw;c.style.height=c._sh;x.clearRect(0,0,c.width,c.height);x.drawImage(c._o,0,0)}})}
 function ui(){var sh=document.querySelector('.phS .phS-show')||document.querySelector('.phS-show');if(!sh||!sh.children.length){setTimeout(ui,200);return}if(document.querySelector('.ppTg'))return;
- var t=document.createElement('div');t.className='ppTg phSeg';t.setAttribute('role','group');t.setAttribute('aria-label','모드');t.innerHTML='<button type="button" data-s="cl">CLASSIC</button><button type="button" data-s="pp">PANGPANG</button>';
+ var t=document.createElement('div');t.className='ppTg phSeg';t.setAttribute('role','group');t.setAttribute('aria-label','모드');t.innerHTML='<button type="button" data-s="pp">PANGPANG</button><button type="button" data-s="cl">CLASSIC</button>';
  sh.after(t);
  t.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;e.stopPropagation();set(b.dataset.s==='pp')});
  ['pointerdown','touchstart'].forEach(function(n){t.addEventListener(n,function(e){e.stopPropagation()})});setTimeout(function(){set(window.PPM);window.phSeg&&phSeg()},600)}
@@ -554,7 +563,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();</script>
 <script id="ppDrawJs">/* 팡팡이 모드 그림: 적 = 심술 팡팡이, 내 비행기 = 별 팡팡이, 총알 = 작은 별 */
 window.ppSpr=function(x,name,cx,cy,s,c1,alpha){var I=window.PPI,b=name.replace(/2$/,''),k=b==='ship'?(String(c1).toLowerCase()==='#ff6fae'?'11':'4'):b==='bee'?'e2':b==='moth'?'e1':b==='boss'?'e3':null;if(!k||!I[k]||!I[k].complete)return false;
- var z=b==='ship'?30:b==='boss'?30:26,dy=/2$/.test(name)?-1:0;x.save();if(alpha!=null)x.globalAlpha=alpha;if(c1==='#ffffff')x.globalAlpha=(alpha==null?1:alpha)*.55;x.imageSmoothingEnabled=true;x.drawImage(I[k],Math.round(cx-z/2),Math.round(cy-z/2+dy),z,z);x.restore();return true};
+ var img=I[k];if(b!=='ship'&&window.__eh){var ck=k+'_'+window.__eh,T=window.__tint||(window.__tint={});if(!T[ck]){var cv=document.createElement('canvas');cv.width=cv.height=96;var q=cv.getContext('2d');if('filter' in q){q.filter='hue-rotate('+window.__eh+'deg) saturate(1.15)';q.drawImage(img,0,0,96,96);T[ck]=cv}else T[ck]=img}img=T[ck]} /* 악당 색 다채롭게 (2026-10-31) */
+ var z=b==='ship'?30:b==='boss'?30:26,dy=/2$/.test(name)?-1:0;x.save();if(alpha!=null)x.globalAlpha=alpha;if(c1==='#ffffff')x.globalAlpha=(alpha==null?1:alpha)*.55;x.imageSmoothingEnabled=true;x.drawImage(img,Math.round(cx-z/2),Math.round(cy-z/2+dy),z,z);x.restore();return true};
 window.ppShot=function(x,X,Y,c){x.save();x.fillStyle='#ffe27a';x.shadowColor=c||'#ffd23f';x.shadowBlur=6;x.beginPath();for(var k=0;k<8;k++){var a=-Math.PI/2+k*Math.PI/4,q=k%2?1.6:4.2;x.lineTo(X+q*Math.cos(a),Y-2+q*Math.sin(a))}x.closePath();x.fill();x.restore()};</script>
 </body>
 </html>
