@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>try{localStorage.removeItem("phTutCfg:"+location.pathname)}catch(e){} /* 2026-11-01: HOW TO PLAY 최신 설명 */</script><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793554601";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>try{localStorage.removeItem("phTutCfg:"+location.pathname)}catch(e){} /* 2026-11-01: HOW TO PLAY 최신 설명 */</script><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793573539";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>TWIN STAR · 트윈스타</title>
@@ -212,30 +212,25 @@ const sfx={ /* 효과음 (2026-10-31): 팡팡이처럼 동글동글 · 귀 아�
  over:()=>[392,330,262,196].forEach((f,i)=>tone('triangle',f,f*.97,.4,.09,i*.3))};
 /* 배경음 (2026-10-30 v2): 처지지 않게 — 132BPM · 킥 4박 + 스네어 + 16분 아르페지오 + 멜로디 훅 + 메아리 */
 const BG={on:false,at:0,n:0};
-const CH=[['A3','C4','E4','A4'],['A3','C4','F4','A4'],['F3','A3','C4','E4'],['E3','G#3','B3','D4'],['D3','F3','A3','D4'],['B3','D4','F4','A4'],['F3','A3','C4','E4'],['E3','G#3','B3','E4']]; /* 긴장감: 하모닉 마이너 · 감화음 */
-const BAS=['A2','A2','F2','E2','D2','B2','F2','E2'];
+const CH=[['A3','C#4','E4','A4'],['E3','G#3','B3','E4'],['F#3','A3','C#4','F#4'],['E3','G#3','B3','E4'],['D3','F#3','A3','D4'],['B3','D4','F#4','B4'],['F#3','A3','C#4','F#4'],['E3','G#3','B3','D4']]; /* 2026-11-02: 경쾌하게 — A장조 (I·V·vi·V·IV·ii·vi·V7) */
+const BAS=['A2','E2','F#2','E2','D2','B2','F#2','E2'];
 const ARP=[0,1,2,3,2,1,0,2,1,3,2,1,3,2,1,2];
-const MEL=['A5 . . . E5 . F5 . E5 . . . C6 . B5 .','A5 . . . E5 . F5 . G#5 . . . A5 . . .','C6 . . . A5 . B5 . C6 . . . E6 . D6 .','B5 . . . G#5 . A5 . B5 . . . E5 . . .','D6 . . . A5 . F5 . A5 . . . D6 . C6 .','B5 . . . F5 . D6 . B5 . . . F6 . E6 .','C6 . . . A5 . C6 . F6 . . . E6 . D6 .','E6 . . . D6 . B5 . G#5 . . . E5 . . .'].map(b=>b.split(' '));
+const MEL=['A4 . . . C#5 . E5 . . . C#5 . B4 . A4 .','B4 . . . G#4 . B4 . E5 . . . D5 . B4 .','A4 . . . C#5 . F#5 . . . E5 . C#5 . A4 .','G#4 . . . B4 . E5 . D5 . . . B4 . . .','F#4 . . . A4 . D5 . . . C#5 . A4 . F#4 .','D5 . . . B4 . F#5 . . . E5 . D5 . . .','C#5 . . . A4 . C#5 . E5 . . . F#5 . E5 .','E5 . . . D5 . B4 . G#4 . . . E4 . . .'].map(b=>b.split(' '));
 const NN=n=>{const m=n.match(/([A-G])(#?)(\d)/);const s={C:0,D:2,E:4,F:5,G:7,A:9,B:11}[m[1]]+(m[2]?1:0);return 440*Math.pow(2,(s+(+m[3]+1)*12-69)/12)};
-let ECHO=null;function echo(){if(!ac)return null;if(ECHO&&ECHO.context===ac)return ECHO;const d=ac.createDelay(1),fb=ac.createGain(),lp=ac.createBiquadFilter(),wet=ac.createGain();d.delayTime.value=60/132*.75;fb.gain.value=.3;lp.type='lowpass';lp.frequency.value=2200;wet.gain.value=.3;d.connect(lp).connect(fb).connect(d);lp.connect(wet).connect(bout());ECHO=d;return d}
+let ECHO=null;function echo(){if(!ac)return null;if(ECHO&&ECHO.context===ac)return ECHO;const d=ac.createDelay(1),fb=ac.createGain(),lp=ac.createBiquadFilter(),wet=ac.createGain();d.delayTime.value=60/138*.75;fb.gain.value=.3;lp.type='lowpass';lp.frequency.value=2200;wet.gain.value=.3;d.connect(lp).connect(fb).connect(d);lp.connect(wet).connect(bout());ECHO=d;return d}
 function bnote(type,f,t,dur,vol,att,cut,send){const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vol,t+(att||.006));g.gain.exponentialRampToValueAtTime(.0001,t+dur);let n=o;if(cut){const fl=ac.createBiquadFilter();fl.type='lowpass';fl.frequency.value=cut;o.connect(fl);n=fl}n.connect(g);g.connect(bout());if(send){const e=echo();e&&g.connect(e)}o.start(t);o.stop(t+dur+.05)}
 function bnz(t,dur,vol,type,freq){if(!NZ)return;const s=ac.createBufferSource(),fl=ac.createBiquadFilter(),g=ac.createGain();s.buffer=NZ;fl.type=type;fl.frequency.value=freq;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);s.connect(fl).connect(g).connect(bout());s.start(t,Math.random()*.4);s.stop(t+dur+.02)}
-function bgmTick(){if(!BG.on||!ac||!AUD.bgm())return;const sp=60/132/4;if(BG.at<ac.currentTime-.1)BG.at=ac.currentTime+.05; /* 꺼졌다 켜지면 밀린 음 건너뜀 */
+function bgmTick(){if(!BG.on||!ac||!AUD.bgm())return;const sp=60/138/4;if(BG.at<ac.currentTime-.1)BG.at=ac.currentTime+.05; /* 꺼졌다 켜지면 밀린 음 건너뜀 */
  while(BG.at<ac.currentTime+.3){const bar=(BG.n>>4)%8,st=BG.n&15,t=BG.at,c=CH[bar],lap=(BG.n>>7)%2;
-  /* 16분 아르페지오 */
-  bnote('square',NN(c[ARP[st]])*2,t,sp*1.6,.032,.003,2100,true);
+  /* (2026-11-02) 깔리는 16분 아르페지오는 뺌 */
   /* 멜로디 훅: 첫 바퀴 앞 4마디는 쉬고, 그 뒤부터 */
-  if(lap||bar>=4){const m=MEL[bar][st];if(m&&m!=='.'){bnote('triangle',NN(m),t,sp*3.2,.07,.006,0,true);bnote('square',NN(m),t,sp*2.4,.018,.006,3000,false)}}
-  /* 패드 */
-  if(st===0)c.forEach(n=>bnote('triangle',NN(n),t,sp*16,.018,sp*2,1300,false));
+  {const m=MEL[bar][st];if(m&&m!=='.'){bnote('triangle',NN(m),t,sp*3.4,.09,.006,0,true);bnote('square',NN(m),t,sp*2.4,.02,.006,2400,false)}} /* 2026-11-02: 멜로디는 A4~F#5 가운데 음역 · 처음부터 */
   /* 베이스: 8분 옥타브 점프 */
   if(st%2===0){const b=NN(BAS[bar])*(st%4===2?2:1);bnote('square',b,t,sp*1.7,.06,.004,900,false)}
   /* 킥: 매 박 · 스네어: 2·4박 · 하이햇: 16분 */
   if(st%4===0){const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(48,t+.12);g.gain.setValueAtTime(.2,t);g.gain.exponentialRampToValueAtTime(.0001,t+.18);o.connect(g).connect(bout());o.start(t);o.stop(t+.2);bnote('triangle',1100,t,.03,.035,.001,0,false)}
   if(st===4||st===12){bnz(t,.14,.11,'bandpass',1900);bnote('triangle',220,t,.08,.04,.001,0,false)}
-  bnz(t,.035,st%2?.028:.014,'highpass',7500);
-  /* 긴장감 맥박: 반음 부딪힘 (E6·F6) 아주 작게 */
-  if(st%4===2)bnote('sine',NN(st%8===2?'E6':'F6'),t,sp*1.2,.022,.002,0,true);
+  bnz(t,.03,st%2?.014:.007,'highpass',6500); /* 하이햇 작게 */
   BG.at+=sp;BG.n++}}
 function bgmStart(){if(!ac)return;BG.on=true;BG.at=ac.currentTime+.1;BG.n=0;nz()}
 function bgmStop(){BG.on=false}
@@ -398,7 +393,7 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#06071a';x.fillRect(0
  const anim=Math.floor(tGame*3)%2;
  V.E.forEach(e=>{const nm=['bee','moth','boss'][e.k]+(anim?'2':'');let c=EC[e.k];if(e.k===2&&e.hp<2)c=EC[3];if(V.FZ)c=['#bfefff','#5fb8ff'];if(e.fl>0)c=['#ffffff','#ffffff'];window.__eh=(V.FZ||e.fl>0)?0:[0,0,50,110,160,200,260,310][((e.r||0)+(e.c>3?1:0)+stage*3)%8];drawSpr(nm,e.x,e.y,2,c[0],c[1]);if(V.FZ){x.strokeStyle='rgba(191,239,255,.7)';x.lineWidth=1;x.strokeRect(Math.round(e.x)-10,Math.round(e.y)-9,20,18)}});
  V.PB.forEach(b=>{if(window.PPM&&window.ppShot){ppShot(x,b.x,b.y,PC[b.o]);return}x.fillStyle=PC[b.o];x.fillRect(Math.round(b.x)-1,Math.round(b.y)-5,2,8);x.fillStyle='#fff';x.fillRect(Math.round(b.x)-1,Math.round(b.y)-5,2,3)});
- {const bl=Math.floor(performance.now()/110)%2;V.EB.forEach(b=>{const X=Math.round(b.x),Y=Math.round(b.y);const sp=Math.hypot(b.vx||0,b.vy||1)||1,tx=(b.vx||0)/sp,ty=(b.vy||1)/sp;x.fillStyle='rgba(255,90,60,.35)';x.fillRect(Math.round(X-tx*7)-2,Math.round(Y-ty*7)-2,4,4);x.fillStyle='rgba(255,60,90,.3)';x.fillRect(X-6,Y-6,12,12);x.fillStyle=bl?'#ff3b5c':'#ffb02e';x.fillRect(X-4,Y-4,8,8);x.fillStyle='#fff';x.fillRect(X-2,Y-2,4,4)})} /* 적 미사일: 크고 반짝이게 */
+ {const bl=Math.floor(performance.now()/110)%2;V.EB.forEach(b=>{const X=Math.round(b.x),Y=Math.round(b.y);const sp=Math.hypot(b.vx||0,b.vy||1)||1,tx=(b.vx||0)/sp,ty=(b.vy||1)/sp;x.fillStyle='rgba(255,90,60,.35)';x.fillRect(Math.round(X-tx*5)-1,Math.round(Y-ty*5)-1,2,2);x.fillStyle='rgba(255,60,90,.28)';x.fillRect(X-3,Y-3,6,6);x.fillStyle=bl?'#ff3b5c':'#ffb02e';x.fillRect(X-2,Y-2,4,4);x.fillStyle='#fff';x.fillRect(X-1,Y-1,2,2)})} /* 적 미사일: 반짝이지만 팡팡이 미사일보다 작게 (2026-11-02 · 맞는 범위는 그대로) */
  V.IT.forEach(t=>{const m=IT[t.k];x.fillStyle='rgba(255,255,255,.12)';x.fillRect(t.x-9,t.y-9,18,18);x.strokeStyle=ITC[t.k];x.lineWidth=1.5;x.strokeRect(t.x-9,t.y-9,18,18);x.fillStyle=ITC[t.k];m.forEach((row,yy)=>[...row].forEach((v,xx)=>{if(v==='1')x.fillRect(t.x-5+xx*2,t.y-5+yy*2,2,2)}))});
  if(coop&&V.P.length===2&&V.BM){const a=V.P[0],b=V.P[1],bm=V.BM;
   if(bm.t){const bx=bm.x,w=16+Math.sin(performance.now()/40)*3;const g=x.createLinearGradient(bx-w,0,bx+w,0);g.addColorStop(0,'rgba(63,208,255,0)');g.addColorStop(.3,PC[0]);g.addColorStop(.5,'#ffffff');g.addColorStop(.7,PC[1]);g.addColorStop(1,'rgba(255,111,174,0)');x.fillStyle=g;x.globalAlpha=.9;x.fillRect(bx-w,-OY/SC,w*2,H-120+OY/SC);x.globalAlpha=1}
